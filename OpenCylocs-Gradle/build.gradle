@@ -182,6 +182,26 @@ dependencies {
     // http://mvnrepository.com/artifact/org.springframework.security/spring-security-web
     compile group: 'org.springframework.security', name: 'spring-security-web', version: '4.1.0.RELEASE'
     
+    // Struts
+    // http://mvnrepository.com/artifact/org.apache.struts/struts-core
+    compile group: 'org.apache.struts', name: 'struts-core', version: '1.3.10'
+    // http://mvnrepository.com/artifact/org.apache.struts/struts-extras
+    compile group: 'org.apache.struts', name: 'struts-extras', version: '1.3.10'
+    // http://mvnrepository.com/artifact/org.apache.struts/struts-taglib
+    compile group: 'org.apache.struts', name: 'struts-taglib', version: '1.3.10'
+    // http://mvnrepository.com/artifact/org.apache.struts/struts-tiles
+    compile group: 'org.apache.struts', name: 'struts-tiles', version: '1.3.10'
+    
+    // Cewolf
+    // http://mvnrepository.com/artifact/cewolf/cewolf
+    compile group: 'cewolf', name: 'cewolf', version: '1.0'
+    
+    // JSON.simple
+    // http://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
+
+    
+    
     
     // TODO: Add dependencies here ...
     // You can read more about how to add dependency here:

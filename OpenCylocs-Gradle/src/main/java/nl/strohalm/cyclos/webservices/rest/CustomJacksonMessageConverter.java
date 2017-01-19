@@ -22,21 +22,21 @@ package nl.strohalm.cyclos.webservices.rest;
 import java.io.EOFException;
 import java.io.IOException;
 
-import com.fasterxml.jackson.JsonParseException;
-import com.fasterxml.jackson.JsonParser;
-import com.fasterxml.jackson.JsonToken;
-import com.fasterxml.jackson.map.DeserializationConfig;
-import com.fasterxml.jackson.map.JsonMappingException;
-import com.fasterxml.jackson.map.ObjectMapper;
-import com.fasterxml.jackson.map.SerializationConfig;
-import com.fasterxml.jackson.map.annotation.JsonSerialize.Inclusion;
-import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonToken;
+import com.fasterxml.jackson.databind.DeserializationConfig;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationConfig;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize.Inclusion;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
 /**
  * Custom Jackson converter used to customize the {@link ObjectMapper}
  * @author luis
  */
-public class CustomJacksonMessageConverter extends MappingJacksonHttpMessageConverter {
+public class CustomJacksonMessageConverter extends MappingJackson2HttpMessageConverter {
 
     /**
      * Custom object mapper which handles empty input as null objects

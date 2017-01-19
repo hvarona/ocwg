@@ -43,7 +43,7 @@ import nl.strohalm.cyclos.webservices.WebServiceContext;
 import nl.strohalm.cyclos.webservices.model.ServerErrorVO;
 
 import org.apache.commons.lang.StringUtils;
-import com.fasterxml.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

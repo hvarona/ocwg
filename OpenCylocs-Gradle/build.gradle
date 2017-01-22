@@ -350,5 +350,12 @@ dependencies {
        "org.apache.tomcat.embed:tomcat-embed-jasper:8.0.36"
 
     // Xerces, not sure why this is required but it is
-    //compile group: 'xerces', name: 'xercesImpl', version: '2.11.0'    
+    //compile group: 'xerces', name: 'xercesImpl', version: '2.11.0'   
+    
+    compile group: 'org.apache.derby', name: 'derby', version: '10.8.2.2'
+    
+    // https://mvnrepository.com/artifact/org.apache.openjpa/openjpa
+    compile group: 'org.apache.openjpa', name: 'openjpa', version: '2.4.2'
+
+    
 }

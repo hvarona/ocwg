@@ -40,7 +40,7 @@ import nl.strohalm.cyclos.utils.conversion.Converter;
 import nl.strohalm.cyclos.utils.conversion.FixedLengthNumberConverter;
 import nl.strohalm.cyclos.utils.conversion.NumberConverter;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * A file mapping that has mapped fields
@@ -65,7 +65,6 @@ public abstract class FileMappingWithFields extends FileMapping {
             this.value = value;
         }
 
-        @Override
         public String getValue() {
             return value;
         }
@@ -80,16 +79,15 @@ public abstract class FileMappingWithFields extends FileMapping {
             this.name = name;
         }
 
-        @Override
         public String getName() {
             return name;
         }
     }
 
     public static final NumberFormat DEFAULT_NUMBER_FORMAT = NumberFormat.FIXED_POSITION;
-    public static final Character DEFAULT_NEGATIVE_AMOUNT_VALUE = '-';
-    public static final Integer DEFAULT_DECIMAL_PLACES = 2;
-    public static final Character DEFAULT_DECIMAL_SEPARATOR = '.';
+    public static final Character DEFAULT_NEGATIVE_AMOUNT_VALUE = new Character('-');
+    public static final Integer DEFAULT_DECIMAL_PLACES = new Integer(2);
+    public static final Character DEFAULT_DECIMAL_SEPARATOR = new Character('.');
     public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
 
     private static final long serialVersionUID = -6761459914402653154L;
@@ -102,7 +100,6 @@ public abstract class FileMappingWithFields extends FileMapping {
 
     /**
      * Returns a converter for date
-     * @return 
      */
     @Transient
     public Converter<Calendar> getDateConverter() {
@@ -133,7 +130,6 @@ public abstract class FileMappingWithFields extends FileMapping {
 
     /**
      * Returns a converter for negateAmount
-     * @return 
      */
     @Transient
     public Converter<Boolean> getNegateAmountConverter() {
@@ -147,12 +143,11 @@ public abstract class FileMappingWithFields extends FileMapping {
 
     /**
      * Returns a converter for amount
-     * @return 
      */
     @Transient
     public Converter<BigDecimal> getNumberConverter() {
         if (numberFormat == NumberFormat.FIXED_POSITION) {
-            return new FixedLengthNumberConverter<>(BigDecimal.class, decimalPlaces);
+            return new FixedLengthNumberConverter<BigDecimal>(BigDecimal.class, decimalPlaces);
         } else {
             final DecimalFormatSymbols symbols = new DecimalFormatSymbols();
             symbols.setDecimalSeparator(decimalSeparator);
@@ -160,7 +155,7 @@ public abstract class FileMappingWithFields extends FileMapping {
 
             final DecimalFormat format = new DecimalFormat("0." + StringUtils.repeat("0", decimalPlaces), symbols);
             format.setGroupingUsed(false);
-            return new NumberConverter<>(BigDecimal.class, format);
+            return new NumberConverter<BigDecimal>(BigDecimal.class, format);
         }
     }
 

@@ -61,7 +61,7 @@ import nl.strohalm.cyclos.entities.members.records.MemberRecord;
 import nl.strohalm.cyclos.services.transactions.DoPaymentDTO;
 import nl.strohalm.cyclos.utils.StringHelper;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * Implementation class for custom field values

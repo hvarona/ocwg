@@ -27,12 +27,12 @@ import nl.strohalm.cyclos.dao.BaseDAOImpl;
 import nl.strohalm.cyclos.entities.access.PasswordHistoryLog;
 import nl.strohalm.cyclos.entities.access.PasswordHistoryLog.PasswordType;
 import nl.strohalm.cyclos.entities.access.User;
-import nl.strohalm.cyclos.utils.database.DatabaseHelper;
+import nl.strohalm.cyclos.utils.database.HibernateHelper;
 import nl.strohalm.cyclos.utils.query.PageHelper;
 import nl.strohalm.cyclos.utils.query.PageParameters;
 import nl.strohalm.cyclos.utils.query.QueryParameters.ResultType;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 public class PasswordHistoryLogDAOImpl extends BaseDAOImpl<PasswordHistoryLog> implements PasswordHistoryLogDAO {
 
@@ -40,15 +40,14 @@ public class PasswordHistoryLogDAOImpl extends BaseDAOImpl<PasswordHistoryLog> i
         super(PasswordHistoryLog.class);
     }
 
-    @Override
     public boolean wasAlreadyUsed(final User user, final PasswordType type, final String password) {
 
-        final Map<String, Object> namedParameters = new HashMap<>();
+        final Map<String, Object> namedParameters = new HashMap<String, Object>();
 
-        final StringBuilder hql = DatabaseHelper.getInitialQuery(getEntityType(), "h");
-        DatabaseHelper.addParameterToQuery(hql, namedParameters, "h.user", user);
-        DatabaseHelper.addParameterToQuery(hql, namedParameters, "h.type", type);
-        DatabaseHelper.addParameterToQuery(hql, namedParameters, "upper(h.password)", StringUtils.trimToEmpty(password).toUpperCase());
+        final StringBuilder hql = HibernateHelper.getInitialQuery(getEntityType(), "h");
+        HibernateHelper.addParameterToQuery(hql, namedParameters, "h.user", user);
+        HibernateHelper.addParameterToQuery(hql, namedParameters, "h.type", type);
+        HibernateHelper.addParameterToQuery(hql, namedParameters, "upper(h.password)", StringUtils.trimToEmpty(password).toUpperCase());
 
         final List<Object> list = list(ResultType.PAGE, hql.toString(), namedParameters, PageParameters.count());
 

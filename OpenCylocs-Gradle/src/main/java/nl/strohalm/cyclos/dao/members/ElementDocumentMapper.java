@@ -24,21 +24,18 @@ import nl.strohalm.cyclos.utils.CustomFieldsContainer;
 import nl.strohalm.cyclos.utils.lucene.AbstractDocumentMapper;
 import nl.strohalm.cyclos.utils.lucene.DocumentBuilder;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.document.Document;
 
 /**
  * Maps {@link Element}s to lucene {@link Document}s
  * 
  * @author luis
- * @param <E>
  */
 public abstract class ElementDocumentMapper<E extends Element> extends AbstractDocumentMapper<E> {
 
     /**
      * Determines whether the e-mail will be indexed
-     * @param element
-     * @return 
      */
     protected boolean indexEmail(final E element) {
         return StringUtils.isNotEmpty(element.getEmail());

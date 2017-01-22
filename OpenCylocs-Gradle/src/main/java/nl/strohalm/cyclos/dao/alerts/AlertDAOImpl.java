@@ -31,7 +31,7 @@ import nl.strohalm.cyclos.entities.Relationship;
 import nl.strohalm.cyclos.entities.alerts.Alert;
 import nl.strohalm.cyclos.entities.alerts.Alert.Type;
 import nl.strohalm.cyclos.entities.alerts.AlertQuery;
-import nl.strohalm.cyclos.utils.database.DatabaseHelper;
+import nl.strohalm.cyclos.utils.database.HibernateHelper;
 
 /**
  * Implementation class for AlertDAO component. It delegates basic operations to a InsertableDAO and a BaseDAO. Extends Spring's Hibernate Support.
@@ -78,22 +78,22 @@ public class AlertDAOImpl extends BaseDAOImpl<Alert> implements AlertDAO {
         }
         final Map<String, Object> namedParameters = new HashMap<String, Object>();
         final Set<Relationship> fetch = query.getFetch();
-        final StringBuilder hql = DatabaseHelper.getInitialQuery(entityType, "a", fetch);
+        final StringBuilder hql = HibernateHelper.getInitialQuery(entityType, "a", fetch);
         if (!query.isShowRemoved()) {
             hql.append(" and a.removed = false ");
         }
         if (entityType.equals(Type.MEMBER.getEntityType())) {
-            DatabaseHelper.addParameterToQuery(hql, namedParameters, "a.member", query.getMember());
+            HibernateHelper.addParameterToQuery(hql, namedParameters, "a.member", query.getMember());
 
             if (query.getGroups() != null && !query.getGroups().isEmpty()) {
                 hql.append(" and a.member.group in (:groups) ");
                 namedParameters.put("groups", query.getGroups());
             }
         }
-        DatabaseHelper.addParameterToQuery(hql, namedParameters, "a.key", query.getKey());
-        DatabaseHelper.addPeriodParameterToQuery(hql, namedParameters, "a.date", query.getPeriod());
+        HibernateHelper.addParameterToQuery(hql, namedParameters, "a.key", query.getKey());
+        HibernateHelper.addPeriodParameterToQuery(hql, namedParameters, "a.date", query.getPeriod());
 
-        DatabaseHelper.appendOrder(hql, "a.date desc, a.id desc");
+        HibernateHelper.appendOrder(hql, "a.date desc, a.id desc");
         return list(query, hql.toString(), namedParameters);
     }
 

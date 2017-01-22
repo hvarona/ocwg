@@ -19,13 +19,11 @@
  */
 package nl.strohalm.cyclos.entities.settings;
 
-
 import java.util.Properties;
+
 import nl.strohalm.cyclos.utils.DataObject;
 
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.apache.commons.lang.StringUtils;
 /*import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;*/
 
@@ -43,13 +41,13 @@ public class MailSettings extends DataObject {
     private String                   smtpUsername;
     private String                   smtpPassword;
     private boolean                  smtpUseTLS       = false;
-    private transient JavaMailSender mailSender;
+//    private transient JavaMailSender mailSender;
 
     public String getFromMail() {
         return fromMail;
     }
 
-    public JavaMailSender getMailSender() {        
+  /*  public JavaMailSender getMailSender() {
         if (mailSender == null) {
             final JavaMailSenderImpl impl = new JavaMailSenderImpl();
             impl.setHost(smtpServer);
@@ -68,7 +66,7 @@ public class MailSettings extends DataObject {
             mailSender = impl;
         }
         return mailSender;
-    }
+    }*/
 
     public String getSmtpPassword() {
         return smtpPassword;

@@ -1,20 +1,20 @@
 /*
- This file is part of Cyclos (www.cyclos.org).
- A project of the Social Trade Organisation (www.socialtrade.org).
+    This file is part of Cyclos (www.cyclos.org).
+    A project of the Social Trade Organisation (www.socialtrade.org).
 
- Cyclos is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+    Cyclos is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
 
- Cyclos is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- GNU General Public License for more details.
+    Cyclos is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with Cyclos; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+    You should have received a copy of the GNU General Public License
+    along with Cyclos; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
  */
 package nl.strohalm.cyclos.setup;
@@ -30,26 +30,26 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 import nl.strohalm.cyclos.CyclosConfiguration;
 import nl.strohalm.cyclos.utils.PropertiesHelper;
 import nl.strohalm.cyclos.utils.conversion.LocaleConverter;
-import nl.strohalm.cyclos.utils.database.DatabaseUtil;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
 /**
  * Generate cyclos default data
- *
  * @author luis
  */
 public class Setup {
 
-    public static final String[] SPRING_CONFIG_FILES = {"/nl/strohalm/cyclos/spring/persistence.xml"};
-    public static PrintStream out = System.out;
-    private static final String RESOURCE_BUNDLE_BASE_NAME = "nl.strohalm.cyclos.setup.CyclosSetup";
+    public static final String[] SPRING_CONFIG_FILES       = { "/nl/strohalm/cyclos/spring/persistence.xml" };
+    public static PrintStream    out                       = System.out;
+    private static final String  RESOURCE_BUNDLE_BASE_NAME = "nl.strohalm.cyclos.setup.CyclosSetup";
 
     public static PrintStream getOut() {
         return Setup.out;
@@ -65,8 +65,6 @@ public class Setup {
 
     /**
      * The external entry point
-     * @param args
-     * @throws java.io.IOException
      */
     public static void main(final String... args) throws IOException {
         DataBaseConfiguration.SKIP = true;
@@ -94,18 +92,24 @@ public class Setup {
     }
 
     private ResourceBundle bundle;
-    private boolean createBasicData;
-    private boolean createDataBase;
-    private boolean createSetupData;
-    private boolean createInitialData;
-    private boolean createSmsData;
-    private File exportScriptTo;
-    private boolean force;
-    private EntityManager session;
-    private EntityManagerFactory sessionFactory;
-    private Locale locale;
+    private Configuration  configuration;
+    private boolean        createBasicData;
+    private boolean        createDataBase;
+    private boolean        createSetupData;
+    private boolean        createInitialData;
+    private boolean        createSmsData;
+    private File           exportScriptTo;
+    private boolean        force;
+    private Session        session;
+    private SessionFactory sessionFactory;
+    private Locale         locale;
 
     public Setup() {
+    }
+
+    public Setup(final Configuration configuration, final SessionFactory sessionFactory) {
+        this.configuration = configuration;
+        this.sessionFactory = sessionFactory;
     }
 
     public boolean execute() {
@@ -120,8 +124,13 @@ public class Setup {
             return false;
         }
 
-        session = DatabaseUtil.getCurrentEntityManager();
-
+        // Configure Hibernate if necessary
+        if (configuration == null || sessionFactory == null) {
+            throw new IllegalStateException("Persistence not configured");
+        }
+        // Execute the actions
+        session = sessionFactory.openSession();
+        final Transaction transaction = session.beginTransaction();
         try {
             if (createDataBase) {
                 new CreateDataBase(this).run();
@@ -141,7 +150,7 @@ public class Setup {
             if (createSmsData) {
                 new CreateSmsData(this).run();
             }
-            session.flush();
+            transaction.commit();
             out.println(bundle.getString("setup.end"));
 
             if (Boolean.getBoolean("cyclos.standalone")) {
@@ -150,7 +159,7 @@ public class Setup {
 
             return true;
         } catch (final Exception e) {
-            session.clear();
+            transaction.rollback();
             e.printStackTrace(out);
             return false;
         } finally {
@@ -166,6 +175,10 @@ public class Setup {
         return bundle;
     }
 
+    public Configuration getConfiguration() {
+        return configuration;
+    }
+
     public File getExportScriptTo() {
         return exportScriptTo;
     }
@@ -174,8 +187,12 @@ public class Setup {
         return locale;
     }
 
-    public EntityManager getSession() {
+    public Session getSession() {
         return session;
+    }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
     }
 
     public boolean isCreateBasicData() {
@@ -196,6 +213,10 @@ public class Setup {
 
     public boolean isValid() {
         return createDataBase || exportScriptTo != null || createBasicData || createInitialData || createSmsData;
+    }
+
+    public void setConfiguration(final Configuration configuration) {
+        this.configuration = configuration;
     }
 
     public void setCreateBasicData(final boolean createBasicData) {
@@ -230,6 +251,10 @@ public class Setup {
         this.locale = locale;
     }
 
+    public void setSessionFactory(final SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     private void checkBundle() {
         if (bundle == null) {
             bundle = getResourceBundle(locale);
@@ -241,7 +266,7 @@ public class Setup {
      */
     private boolean promptConfirm() {
 
-        final List<String> executedOperations = new ArrayList<>();
+        final List<String> executedOperations = new ArrayList<String>();
         boolean scriptOnly = false;
         if (exportScriptTo != null) {
             scriptOnly = true;

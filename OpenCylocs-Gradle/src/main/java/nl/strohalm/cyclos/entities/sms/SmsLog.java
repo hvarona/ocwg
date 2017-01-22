@@ -38,7 +38,7 @@ import nl.strohalm.cyclos.entities.members.messages.Message;
 import nl.strohalm.cyclos.utils.FormatObject;
 import nl.strohalm.cyclos.utils.StringValuedEnum;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * A log of a sent SMS message

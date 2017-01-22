@@ -30,8 +30,8 @@ import nl.strohalm.cyclos.entities.exceptions.QueryParseException;
 import nl.strohalm.cyclos.entities.members.records.FullTextMemberRecordQuery;
 import nl.strohalm.cyclos.entities.members.records.MemberRecord;
 import nl.strohalm.cyclos.entities.members.records.MemberRecordQuery;
-import nl.strohalm.cyclos.utils.database.DatabaseCustomFieldHandler;
-import nl.strohalm.cyclos.utils.database.DatabaseHelper;
+import nl.strohalm.cyclos.utils.database.HibernateCustomFieldHandler;
+import nl.strohalm.cyclos.utils.database.HibernateHelper;
 import nl.strohalm.cyclos.utils.lucene.Filters;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -52,7 +52,7 @@ import org.apache.lucene.search.SortField;
 public class MemberRecordDAOImpl extends IndexedDAOImpl<MemberRecord> implements MemberRecordDAO {
 
     private static final String[] FIELDS_FULL_TEXT = {"customValues", "element.name", "element.username", "element.email", "by.name", "by.username"};
-    private DatabaseCustomFieldHandler hibernateCustomFieldHandler;
+    private HibernateCustomFieldHandler hibernateCustomFieldHandler;
 
     public MemberRecordDAOImpl() {
         super(MemberRecord.class);
@@ -98,20 +98,20 @@ public class MemberRecordDAOImpl extends IndexedDAOImpl<MemberRecord> implements
         hql.append(" select mr");
         hql.append(" from ").append(getEntityType().getName()).append(" mr ");
         hibernateCustomFieldHandler.appendJoins(hql, "mr.customValues", query.getCustomValues());
-        DatabaseHelper.appendJoinFetch(hql, getEntityType(), "mr", query.getFetch());
+        HibernateHelper.appendJoinFetch(hql, getEntityType(), "mr", query.getFetch());
         hql.append(" where 1=1");
-        DatabaseHelper.addParameterToQuery(hql, namedParameters, "mr.type", query.getType());
-        DatabaseHelper.addParameterToQuery(hql, namedParameters, "mr.element", query.getElement());
-        DatabaseHelper.addInParameterToQuery(hql, namedParameters, "mr.element.group", query.getGroups());
-        DatabaseHelper.addParameterToQuery(hql, namedParameters, "mr.element.broker", query.getBroker());
-        DatabaseHelper.addParameterToQuery(hql, namedParameters, "mr.by", query.getBy());
-        DatabaseHelper.addPeriodParameterToQuery(hql, namedParameters, "mr.date", query.getPeriod());
+        HibernateHelper.addParameterToQuery(hql, namedParameters, "mr.type", query.getType());
+        HibernateHelper.addParameterToQuery(hql, namedParameters, "mr.element", query.getElement());
+        HibernateHelper.addInParameterToQuery(hql, namedParameters, "mr.element.group", query.getGroups());
+        HibernateHelper.addParameterToQuery(hql, namedParameters, "mr.element.broker", query.getBroker());
+        HibernateHelper.addParameterToQuery(hql, namedParameters, "mr.by", query.getBy());
+        HibernateHelper.addPeriodParameterToQuery(hql, namedParameters, "mr.date", query.getPeriod());
         hibernateCustomFieldHandler.appendConditions(hql, namedParameters, query.getCustomValues());
-        DatabaseHelper.appendOrder(hql, "mr.date desc", "mr.element.name");
+        HibernateHelper.appendOrder(hql, "mr.date desc", "mr.element.name");
         return list(query, hql.toString(), namedParameters);
     }
 
-    public void setHibernateCustomFieldHandler(final DatabaseCustomFieldHandler hibernateCustomFieldHandler) {
+    public void setHibernateCustomFieldHandler(final HibernateCustomFieldHandler hibernateCustomFieldHandler) {
         this.hibernateCustomFieldHandler = hibernateCustomFieldHandler;
     }
 

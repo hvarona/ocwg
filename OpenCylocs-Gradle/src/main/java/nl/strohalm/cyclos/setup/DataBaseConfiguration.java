@@ -34,7 +34,7 @@ import nl.strohalm.cyclos.utils.conversion.LocaleConverter;
 import nl.strohalm.cyclos.utils.tasks.TaskRunner;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.SessionFactory;
@@ -203,7 +203,7 @@ public class DataBaseConfiguration {
                 LOG.info("Database is empty. Running setup to populate it");
                 sessionFactory = configuration.buildSessionFactory();
                 final Locale locale = LocaleConverter.instance().valueOf(properties.getProperty("cyclos.embedded.locale", "en_US"));
-                final Setup setup = new Setup();
+                final Setup setup = new Setup(configuration, sessionFactory);
                 setup.setLocale(locale);
                 setup.setCreateDataBase(true);
                 setup.setCreateBasicData(true);

@@ -23,6 +23,8 @@ import java.io.File;
 import java.util.ResourceBundle;
 
 import org.apache.commons.lang.SystemUtils;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.tool.hbm2ddl.SchemaExport;
 
 /**
  * Exports the database table create script to a given file, and prints it to stdout
@@ -31,12 +33,14 @@ import org.apache.commons.lang.SystemUtils;
 public class ExportScript implements Runnable {
 
     private final ResourceBundle bundle;
+    private final Configuration  configuration;
     private File                 exportTo;
 
     public ExportScript(final Setup setup, final File exportTo) {
         if (exportTo == null) {
             throw new IllegalArgumentException("No file for the script");
         }
+        configuration = setup.getConfiguration();
         bundle = setup.getBundle();
         this.exportTo = exportTo;
     }

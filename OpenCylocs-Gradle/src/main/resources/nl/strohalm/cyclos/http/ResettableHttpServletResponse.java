@@ -264,11 +264,6 @@ public class ResettableHttpServletResponse implements HttpServletResponse, Reset
         }
         return servletOutputStream;
     }
-
-    /**
-     *
-     * @return
-     */
     /*
     public Integer getStatus() {
         return status;

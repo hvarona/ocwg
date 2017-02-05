@@ -23,8 +23,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
-import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Helper class for handling strings
@@ -331,7 +331,7 @@ public class StringHelper {
         }
         string = sb.toString();
         if (unescapeEntities) {
-            string = StringEscapeUtils.unescapeHtml(string);
+            string = StringEscapeUtils.unescapeHtml3(string);
         }
         return string;
     }

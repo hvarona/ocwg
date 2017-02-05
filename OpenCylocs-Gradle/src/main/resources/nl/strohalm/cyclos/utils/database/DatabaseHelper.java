@@ -36,7 +36,7 @@ import nl.strohalm.cyclos.utils.PropertyHelper;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Class with helper method to work with Hibernate

@@ -19,7 +19,7 @@
  */
 package nl.strohalm.cyclos.utils.validation;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 

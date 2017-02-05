@@ -24,8 +24,8 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.ObjectUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Validates if an address is in the given whitelist. The wildcards '*' (any sequence) and '?' (single character) can be used, for example: 200.1.1.*

@@ -49,7 +49,7 @@ import nl.strohalm.cyclos.utils.query.PageImpl;
 import nl.strohalm.cyclos.utils.query.PageParameters;
 import nl.strohalm.cyclos.utils.query.QueryParameters.ResultType;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Handler for entity queries using Hibernate

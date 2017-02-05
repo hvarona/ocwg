@@ -21,7 +21,7 @@ package nl.strohalm.cyclos.utils.conversion;
 
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * You can use this class to split a string by a separator and return a Set instance to from that split. It also allows giving the set returning the

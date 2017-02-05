@@ -19,7 +19,7 @@
  */
 package nl.strohalm.cyclos.utils.conversion;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * A converter that converts a resource bundle key (like monkey.fool.cow.bear) to a helpfile name (like monkeyFoolCowBear). So, the dots are stripped,

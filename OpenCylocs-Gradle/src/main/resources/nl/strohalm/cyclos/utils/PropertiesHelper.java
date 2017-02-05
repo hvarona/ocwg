@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
 
 import org.apache.commons.beanutils.MethodUtils;
 import org.apache.commons.collections.IteratorUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Helper class for java.util.Properties

@@ -25,7 +25,7 @@ import java.util.List;
 
 import nl.strohalm.cyclos.entities.Relationship;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Utility class for relationships manipulation

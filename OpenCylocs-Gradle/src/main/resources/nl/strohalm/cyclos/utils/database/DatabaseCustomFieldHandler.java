@@ -32,7 +32,7 @@ import nl.strohalm.cyclos.utils.StringHelper;
 import nl.strohalm.cyclos.utils.access.LoggedUser;
 import nl.strohalm.cyclos.utils.conversion.IdConverter;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Helper class used to handle custom fields

@@ -21,7 +21,7 @@ package nl.strohalm.cyclos.utils.conversion;
 
 import nl.strohalm.cyclos.utils.MessageResolver;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Looks up messages for converting

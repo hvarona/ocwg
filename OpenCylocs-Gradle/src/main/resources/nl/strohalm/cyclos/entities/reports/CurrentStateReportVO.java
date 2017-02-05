@@ -28,7 +28,6 @@ import nl.strohalm.cyclos.entities.accounts.MemberAccountType;
 import nl.strohalm.cyclos.entities.accounts.SystemAccountType;
 import nl.strohalm.cyclos.entities.groups.MemberGroup;
 import nl.strohalm.cyclos.entities.members.Reference;
-import nl.strohalm.cyclos.services.transactions.TransactionSummaryVO;
 //import nl.strohalm.cyclos.services.transactions.TransactionSummaryVO;
 import nl.strohalm.cyclos.utils.DataObject;
 
@@ -40,8 +39,8 @@ public class CurrentStateReportVO extends DataObject {
     private AdReportVO                                                   adReportVO;
     private Map<SystemAccountType, BigDecimal>                           systemAccountTypesBalance;
     private Map<MemberAccountType, BigDecimal>                           memberAccountTypesBalance;
-    private Map<Currency, Map<InvoiceSummaryType, TransactionSummaryVO>> invoicesSummaries;
-    private Map<Currency, TransactionSummaryVO>                          openLoansSummary;
+//    private Map<Currency, Map<InvoiceSummaryType, TransactionSummaryVO>> invoicesSummaries;
+//    private Map<Currency, TransactionSummaryVO>                          openLoansSummary;
     private Map<Reference.Level, Integer>                                givenReferences;
     private List<Currency>                                               currencies;
 
@@ -61,9 +60,9 @@ public class CurrentStateReportVO extends DataObject {
         return groupMemberCount;
     }
 
-    public Map<Currency, Map<InvoiceSummaryType, TransactionSummaryVO>> getInvoicesSummaries() {
+/*    public Map<Currency, Map<InvoiceSummaryType, TransactionSummaryVO>> getInvoicesSummaries() {
         return invoicesSummaries;
-    }
+    }*/
 
     public Map<MemberAccountType, BigDecimal> getMemberAccountTypesBalance() {
         return memberAccountTypesBalance;
@@ -73,9 +72,9 @@ public class CurrentStateReportVO extends DataObject {
         return numberActiveMembers;
     }
 
-    public Map<Currency, TransactionSummaryVO> getOpenLoansSummary() {
+/*    public Map<Currency, TransactionSummaryVO> getOpenLoansSummary() {
         return openLoansSummary;
-    }
+    }*/
 
     public Map<SystemAccountType, BigDecimal> getSystemAccountTypesBalance() {
         return systemAccountTypesBalance;
@@ -97,9 +96,9 @@ public class CurrentStateReportVO extends DataObject {
         this.groupMemberCount = groupMemberCount;
     }
 
-    public void setInvoicesSummaries(final Map<Currency, Map<InvoiceSummaryType, TransactionSummaryVO>> invoicesSummaries) {
+/*    public void setInvoicesSummaries(final Map<Currency, Map<InvoiceSummaryType, TransactionSummaryVO>> invoicesSummaries) {
         this.invoicesSummaries = invoicesSummaries;
-    }
+    }*/
 
     public void setMemberAccountTypesBalance(final Map<MemberAccountType, BigDecimal> memberAccountTypesBalance) {
         this.memberAccountTypesBalance = memberAccountTypesBalance;
@@ -109,9 +108,9 @@ public class CurrentStateReportVO extends DataObject {
         this.numberActiveMembers = numberActiveMembers;
     }
 
-    public void setOpenLoansSummary(final Map<Currency, TransactionSummaryVO> openLoansSummary) {
+/*    public void setOpenLoansSummary(final Map<Currency, TransactionSummaryVO> openLoansSummary) {
         this.openLoansSummary = openLoansSummary;
-    }
+    }*/
 
     public void setSystemAccountTypesBalance(final Map<SystemAccountType, BigDecimal> systemAccountTypesBalance) {
         this.systemAccountTypesBalance = systemAccountTypesBalance;

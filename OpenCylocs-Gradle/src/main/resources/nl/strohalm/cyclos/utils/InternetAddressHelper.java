@@ -21,7 +21,7 @@ package nl.strohalm.cyclos.utils;
 
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Helper methods for internet addresses

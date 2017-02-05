@@ -25,7 +25,7 @@ import java.text.ParseException;
 
 import nl.strohalm.cyclos.utils.Amount;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Converter for amounts

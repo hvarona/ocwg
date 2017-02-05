@@ -39,7 +39,7 @@ import nl.strohalm.cyclos.entities.sms.SmsMailingQuery;
 import nl.strohalm.cyclos.entities.sms.SmsMailingQuery.Recipient;
 import nl.strohalm.cyclos.utils.access.LoggedUser;
 import nl.strohalm.cyclos.utils.database.DatabaseUtil;
-import nl.strohalm.cyclos.utils.database.DatabaseHelper;
+import nl.strohalm.cyclos.utils.database.HibernateHelper;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -141,7 +141,7 @@ public class SmsMailingDAOImpl extends BaseDAOImpl<SmsMailing> implements SmsMai
     public List<SmsMailing> search(final SmsMailingQuery query) {
         final Map<String, Object> namedParameters = new HashMap<>();
         final StringBuilder hql = new StringBuilder("select m from ").append(SmsMailing.class.getName()).append(" m ");
-        DatabaseHelper.appendJoinFetch(hql, SmsMailing.class, "m", query.getFetch());
+        HibernateHelper.appendJoinFetch(hql, SmsMailing.class, "m", query.getFetch());
         hql.append("left join fetch m.member mbr where 1=1 ");
         if (query.getRecipient() == Recipient.GROUPS) {
             hql.append(" and mbr is null");
@@ -149,13 +149,13 @@ public class SmsMailingDAOImpl extends BaseDAOImpl<SmsMailing> implements SmsMai
             hql.append(" and mbr is not null");
         }
 
-        DatabaseHelper.addPeriodParameterToQuery(hql, namedParameters, "m.date", query.getPeriod());
-        DatabaseHelper.addParameterToQuery(hql, namedParameters, "m.by", query.getBroker());
-        DatabaseHelper.addParameterToQuery(hql, namedParameters, "m.finished", query.getFinished());
-        DatabaseHelper.addParameterToQuery(hql, namedParameters, "m.member", query.getMember());
+        HibernateHelper.addPeriodParameterToQuery(hql, namedParameters, "m.date", query.getPeriod());
+        HibernateHelper.addParameterToQuery(hql, namedParameters, "m.by", query.getBroker());
+        HibernateHelper.addParameterToQuery(hql, namedParameters, "m.finished", query.getFinished());
+        HibernateHelper.addParameterToQuery(hql, namedParameters, "m.member", query.getMember());
         if (CollectionUtils.isNotEmpty(query.getGroups())) {
             hql.append(" and ((mbr is not null");
-            DatabaseHelper.addInParameterToQuery(hql, namedParameters, "mbr.group", query.getGroups());
+            HibernateHelper.addInParameterToQuery(hql, namedParameters, "mbr.group", query.getGroups());
             hql.append(")");
             hql.append(" or exists (");
             hql.append("     select g.id");
@@ -164,7 +164,7 @@ public class SmsMailingDAOImpl extends BaseDAOImpl<SmsMailing> implements SmsMai
             namedParameters.put("_groups_", query.getGroups());
             hql.append(" ))");
         }
-        DatabaseHelper.appendOrder(hql, "m.date desc");
+        HibernateHelper.appendOrder(hql, "m.date desc");
         return list(query, hql.toString(), namedParameters);
     }
 }

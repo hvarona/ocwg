@@ -136,7 +136,7 @@ public class CreateInitialData implements Runnable {
     private Collection<MemberGroup>        enabledMemberGroups;
 
     public CreateInitialData(final Setup setup) {
-        session = (Session) setup.getSession();
+        session = setup.getSession();
         bundle = setup.getBundle();
         systemTypes = new LinkedHashMap<String, AccountType>();
     }

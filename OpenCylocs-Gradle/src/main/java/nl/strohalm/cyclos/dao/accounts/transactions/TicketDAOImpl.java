@@ -29,7 +29,7 @@ import nl.strohalm.cyclos.entities.Relationship;
 import nl.strohalm.cyclos.entities.accounts.transactions.Ticket;
 import nl.strohalm.cyclos.entities.accounts.transactions.TicketQuery;
 import nl.strohalm.cyclos.entities.exceptions.EntityNotFoundException;
-import nl.strohalm.cyclos.utils.database.DatabaseHelper;
+import nl.strohalm.cyclos.utils.database.HibernateHelper;
 
 
 /**
@@ -69,18 +69,18 @@ public class TicketDAOImpl extends BaseDAOImpl<Ticket> implements TicketDAO {
     @Override
     public List<? extends Ticket> search(final TicketQuery query) {
         final Map<String, Object> namedParameters = new HashMap<String, Object>();
-        final StringBuilder hql = DatabaseHelper.getInitialQuery(getEntityType(), "t", query.getFetch());
+        final StringBuilder hql = HibernateHelper.getInitialQuery(getEntityType(), "t", query.getFetch());
         if (query.getNature() != null) {
-            DatabaseHelper.addParameterToQuery(hql, namedParameters, "t.class", query.getNature().getValue());
+            HibernateHelper.addParameterToQuery(hql, namedParameters, "t.class", query.getNature().getValue());
         }
-        DatabaseHelper.addParameterToQuery(hql, namedParameters, "t.status", query.getStatus());
+        HibernateHelper.addParameterToQuery(hql, namedParameters, "t.status", query.getStatus());
         if (query.getGroupedStatus() != null) {
-            DatabaseHelper.addInParameterToQuery(hql, namedParameters, "t.status", (Object[]) query.getGroupedStatus().getNormalStatus());
+            HibernateHelper.addInParameterToQuery(hql, namedParameters, "t.status", (Object[]) query.getGroupedStatus().getNormalStatus());
         }
-        DatabaseHelper.addParameterToQueryOperator(hql, namedParameters, "t.creationDate", "<", query.getCreatedBefore());
-        DatabaseHelper.addParameterToQuery(hql, namedParameters, "t.from", query.getFrom());
-        DatabaseHelper.addParameterToQuery(hql, namedParameters, "t.to", query.getTo());
-        DatabaseHelper.appendOrder(hql, "t.creationDate desc");
+        HibernateHelper.addParameterToQueryOperator(hql, namedParameters, "t.creationDate", "<", query.getCreatedBefore());
+        HibernateHelper.addParameterToQuery(hql, namedParameters, "t.from", query.getFrom());
+        HibernateHelper.addParameterToQuery(hql, namedParameters, "t.to", query.getTo());
+        HibernateHelper.appendOrder(hql, "t.creationDate desc");
         return list(query, hql.toString(), namedParameters);
     }
 }

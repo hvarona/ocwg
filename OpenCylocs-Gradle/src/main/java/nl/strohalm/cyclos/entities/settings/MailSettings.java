@@ -19,13 +19,14 @@
  */
 package nl.strohalm.cyclos.entities.settings;
 
+import java.util.Properties;
 
 import java.util.Properties;
 import nl.strohalm.cyclos.utils.DataObject;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+
 /*import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;*/
 

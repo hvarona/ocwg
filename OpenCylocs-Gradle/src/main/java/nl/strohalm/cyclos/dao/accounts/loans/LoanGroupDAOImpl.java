@@ -30,6 +30,7 @@ import nl.strohalm.cyclos.entities.accounts.loans.LoanGroupQuery;
 import nl.strohalm.cyclos.utils.hibernate.HibernateCustomFieldHandler;
 import nl.strohalm.cyclos.utils.hibernate.HibernateHelper;
 
+
 /**
  * Implamentation DAO class for Loan Groups
  * @author rafael

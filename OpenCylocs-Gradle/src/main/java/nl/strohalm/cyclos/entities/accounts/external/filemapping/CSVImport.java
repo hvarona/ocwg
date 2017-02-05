@@ -35,7 +35,7 @@ import nl.strohalm.cyclos.utils.transactionimport.IllegalTransactionFileFormatEx
 import nl.strohalm.cyclos.utils.transactionimport.TransactionFileImport;
 import nl.strohalm.cyclos.utils.transactionimport.TransactionImportDTO;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * Imports external transactions from a CSV format
@@ -45,7 +45,7 @@ public class CSVImport implements TransactionFileImport {
 
     private static final Converter<String> DEFAULT_CONVERTER = new StringTrimmerConverter(" \t\n\r");
     private final CSVFileMapping           mapping;
-    private final MessageResolver                messageResolver;
+    private MessageResolver                messageResolver;
 
     public CSVImport(final CSVFileMapping mapping, final MessageResolver messageResolver) {
         this.mapping = mapping;
@@ -63,7 +63,7 @@ public class CSVImport implements TransactionFileImport {
         }
 
         // Read each transaction
-        final List<TransactionImportDTO> transactions = new LinkedList<>();
+        final List<TransactionImportDTO> transactions = new LinkedList<TransactionImportDTO>();
         List<String> line;
         while ((line = readLine(in)) != null) {
             ++lineNumber;
@@ -87,7 +87,7 @@ public class CSVImport implements TransactionFileImport {
 
                     // If this is a member_custom_field, the value would be a map
                     if (field.getField().equals(FieldMapping.Field.MEMBER_CUSTOM_FIELD)) {
-                        final Map<String, String> map = new HashMap<>();
+                        final Map<String, String> map = new HashMap<String, String>();
                         map.put(field.getMemberField().getInternalName(), (String) value);
                         value = map;
                     }

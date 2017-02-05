@@ -28,10 +28,10 @@ import nl.strohalm.cyclos.dao.BaseDAOImpl;
 import nl.strohalm.cyclos.entities.infotexts.InfoText;
 import nl.strohalm.cyclos.entities.infotexts.InfoTextQuery;
 import nl.strohalm.cyclos.utils.Period;
-import nl.strohalm.cyclos.utils.database.DatabaseHelper;
-import nl.strohalm.cyclos.utils.database.DatabaseHelper.QueryParameter;
+import nl.strohalm.cyclos.utils.database.HibernateHelper;
+import nl.strohalm.cyclos.utils.database.HibernateHelper.QueryParameter;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 public class InfoTextDAOImpl extends BaseDAOImpl<InfoText> implements InfoTextDAO {
 
@@ -41,8 +41,8 @@ public class InfoTextDAOImpl extends BaseDAOImpl<InfoText> implements InfoTextDA
 
     @Override
     public List<InfoText> search(final InfoTextQuery query) {
-        final Map<String, Object> namedParameters = new HashMap<>();
-        final StringBuilder hql = DatabaseHelper.getInitialQuery(InfoText.class, "info", query.getFetch());
+        final Map<String, Object> namedParameters = new HashMap<String, Object>();
+        final StringBuilder hql = HibernateHelper.getInitialQuery(InfoText.class, "info", query.getFetch());
 
         final String alias = StringUtils.trimToNull(query.getAlias());
         if (alias != null) {
@@ -60,22 +60,22 @@ public class InfoTextDAOImpl extends BaseDAOImpl<InfoText> implements InfoTextDA
         }
 
         if (query.isOnlyActive()) {
-            DatabaseHelper.addParameterToQuery(hql, namedParameters, "info.enabled", Boolean.TRUE);
+            HibernateHelper.addParameterToQuery(hql, namedParameters, "info.enabled", Boolean.TRUE);
             final Period period = Period.day(Calendar.getInstance());
-            QueryParameter beginParameter = DatabaseHelper.getBeginParameter(period);
+            QueryParameter beginParameter = HibernateHelper.getBeginParameter(period);
             if (beginParameter != null) {
                 hql.append(" and (info.validity.end is null or info.validity.end " + beginParameter.getOperator() + " :_begin_)");
                 namedParameters.put("_begin_", beginParameter.getValue());
             }
-            QueryParameter endParameter = DatabaseHelper.getEndParameter(period);
+            QueryParameter endParameter = HibernateHelper.getEndParameter(period);
             if (endParameter != null) {
                 hql.append(" and (info.validity.begin is null or info.validity.begin " + endParameter.getOperator() + " :_end_)");
                 namedParameters.put("_end_", endParameter.getValue());
             }
         } else {
-            DatabaseHelper.addParameterToQuery(hql, namedParameters, "info.enabled", query.getEnabled());
-            DatabaseHelper.addPeriodParameterToQuery(hql, namedParameters, "info.validity.begin", query.getStartIn());
-            DatabaseHelper.addPeriodParameterToQuery(hql, namedParameters, "info.validity.end", query.getEndIn());
+            HibernateHelper.addParameterToQuery(hql, namedParameters, "info.enabled", query.getEnabled());
+            HibernateHelper.addPeriodParameterToQuery(hql, namedParameters, "info.validity.begin", query.getStartIn());
+            HibernateHelper.addPeriodParameterToQuery(hql, namedParameters, "info.validity.end", query.getEndIn());
         }
 
         return list(query, hql.toString(), namedParameters);

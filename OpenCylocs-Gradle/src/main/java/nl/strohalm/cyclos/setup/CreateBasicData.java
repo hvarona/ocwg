@@ -1,24 +1,25 @@
 /*
- This file is part of Cyclos (www.cyclos.org).
- A project of the Social Trade Organisation (www.socialtrade.org).
+    This file is part of Cyclos (www.cyclos.org).
+    A project of the Social Trade Organisation (www.socialtrade.org).
 
- Cyclos is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+    Cyclos is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
 
- Cyclos is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- GNU General Public License for more details.
+    Cyclos is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with Cyclos; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+    You should have received a copy of the GNU General Public License
+    along with Cyclos; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
  */
 package nl.strohalm.cyclos.setup;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -36,6 +37,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
+import nl.strohalm.cyclos.CyclosConfiguration;
 import nl.strohalm.cyclos.access.AdminMemberPermission;
 import nl.strohalm.cyclos.access.AdminSystemPermission;
 import nl.strohalm.cyclos.access.BasicPermission;
@@ -63,10 +65,9 @@ import nl.strohalm.cyclos.entities.settings.Setting;
 import nl.strohalm.cyclos.entities.sms.SmsType;
 import nl.strohalm.cyclos.utils.HashHandler;
 import nl.strohalm.cyclos.utils.conversion.LocaleConverter;
-import nl.strohalm.cyclos.utils.database.DatabaseUtil;
 import nl.strohalm.cyclos.webservices.sms.SmsTypeCode;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * Creates basic data, like application version, permissions, groups, a system
@@ -344,13 +345,13 @@ public class CreateBasicData implements Runnable {
 
     public CreateBasicData(final Setup setup, final boolean setupOnly) {
         this.setupOnly = setupOnly;
-        session = DatabaseUtil.getCurrentEntityManager();
+        session = setup.getSession();
         bundle = setup.getBundle();
-        /*try {
-         cyclosProperties = CyclosConfiguration.getCyclosProperties();
-         } catch (final IOException e) {
-         throw new RuntimeException(e);
-         }*/
+        try {
+            cyclosProperties = CyclosConfiguration.getCyclosProperties();
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
         locale = setup.getLocale() == null ? Locale.getDefault() : setup.getLocale();
     }
 
@@ -361,20 +362,15 @@ public class CreateBasicData implements Runnable {
     public void run() {
         // Check if the basic data is already there
         CriteriaQuery<Application> cq = session.getCriteriaBuilder().createQuery(Application.class);
-        Root<Application> rq = cq.from(Application.class);
-        cq.select(rq);
-
-        try {
-            session.createQuery(cq).getSingleResult();
-            if (session.createQuery(cq).getSingleResult() != null) {
-                Setup.out.println(bundle.getString("basic-data.error.already"));
-                return;
-            }
-
-            Setup.out.println(bundle.getString("basic-data.start"));
-        } catch (Exception e) {
-           // e.printStackTrace();
+        cq.from(Application.class);
+        session.createQuery(cq).getSingleResult();
+        if (session.createQuery(cq).getSingleResult() != null) {
+            Setup.out.println(bundle.getString("basic-data.error.already"));
+            return;
         }
+
+        Setup.out.println(bundle.getString("basic-data.start"));
+
         createApplication();
         createChannels();
         createSmsTypes();
@@ -424,10 +420,9 @@ public class CreateBasicData implements Runnable {
     }
 
     private void createApplication() {
-//        final Version currentVersion = new VersionHistoryReader().read().getCurrent();
+        final Version currentVersion = new VersionHistoryReader().read().getCurrent();
         final Application application = new Application();
-        //application.setVersion(currentVersion.getLabel());
-        application.setVersion("OCH");
+        application.setVersion(currentVersion.getLabel());
         application.setAccountStatusEnabledSince(Calendar.getInstance());
         application.setPasswordHash(PasswordHash.SHA2_SALT);
         application.setOnline(true);
@@ -482,7 +477,7 @@ public class CreateBasicData implements Runnable {
         // Create full members group
         final MemberGroup fullMembers = createGroup(MemberGroup.class, Group.Status.NORMAL, "full-members", ModuleType.BASIC, ModuleType.MEMBER);
         fullMembers.setActive(true);
-        fullMembers.getMemberSettings().setEmailValidation(new HashSet<>(Arrays.asList(EmailValidation.USER)));
+        fullMembers.getMemberSettings().setEmailValidation(new HashSet<EmailValidation>(Arrays.asList(EmailValidation.USER)));
         removeUnwantedMemberPermissions(fullMembers);
         associateDefaultChannels(fullMembers);
 

@@ -31,9 +31,9 @@ import nl.strohalm.cyclos.entities.members.imports.ImportedMemberQuery;
 import nl.strohalm.cyclos.entities.members.imports.ImportedMemberQuery.Status;
 import nl.strohalm.cyclos.entities.members.imports.MemberImport;
 import nl.strohalm.cyclos.services.transactions.TransactionSummaryVO;
-import nl.strohalm.cyclos.utils.database.DatabaseHelper;
+import nl.strohalm.cyclos.utils.database.HibernateHelper;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 public class ImportedMemberDAOImpl extends BaseDAOImpl<ImportedMember> implements ImportedMemberDAO {
 
@@ -41,7 +41,6 @@ public class ImportedMemberDAOImpl extends BaseDAOImpl<ImportedMember> implement
         super(ImportedMember.class);
     }
 
-    @Override
     public TransactionSummaryVO getTransactions(final MemberImport memberImport, final boolean credits) {
         final StringBuilder hql = new StringBuilder();
         hql.append(" select new nl.strohalm.cyclos.services.transactions.NegativeAllowedTransactionSummaryVO(count(*), sum(m.initialBalance))");
@@ -49,34 +48,33 @@ public class ImportedMemberDAOImpl extends BaseDAOImpl<ImportedMember> implement
         hql.append(" where m.status = :success");
         hql.append("   and m.import = :import");
         hql.append("   and m.initialBalance" + (credits ? ">=" : "<") + " :zero");
-        final Map<String, Object> namedParameters = new HashMap<>();
+        final Map<String, Object> namedParameters = new HashMap<String, Object>();
         namedParameters.put("success", ImportedMember.Status.SUCCESS);
         namedParameters.put("import", memberImport);
         namedParameters.put("zero", BigDecimal.ZERO);
         return uniqueResult(hql.toString(), namedParameters);
     }
 
-    @Override
     public List<ImportedMember> search(final ImportedMemberQuery params) {
         final MemberImport memberImport = params.getMemberImport();
         if (memberImport == null || memberImport.isTransient()) {
             return Collections.emptyList();
         }
-        final Map<String, Object> namedParameters = new HashMap<>();
-        final StringBuilder hql = DatabaseHelper.getInitialQuery(getEntityType(), "m", params.getFetch());
-        DatabaseHelper.addParameterToQuery(hql, namedParameters, "m.import", memberImport);
+        final Map<String, Object> namedParameters = new HashMap<String, Object>();
+        final StringBuilder hql = HibernateHelper.getInitialQuery(getEntityType(), "m", params.getFetch());
+        HibernateHelper.addParameterToQuery(hql, namedParameters, "m.import", memberImport);
         final Status status = params.getStatus();
         if (status != null && status != Status.ALL) {
             final String operator = status == Status.ERROR ? "<>" : "=";
-            DatabaseHelper.addParameterToQueryOperator(hql, namedParameters, "m.status", operator, ImportedMember.Status.SUCCESS);
+            HibernateHelper.addParameterToQueryOperator(hql, namedParameters, "m.status", operator, ImportedMember.Status.SUCCESS);
         }
-        DatabaseHelper.addParameterToQuery(hql, namedParameters, "m.lineNumber", params.getLineNumber());
+        HibernateHelper.addParameterToQuery(hql, namedParameters, "m.lineNumber", params.getLineNumber());
         final String nameOrUsername = StringUtils.trimToNull(params.getNameOrUsername());
         if (nameOrUsername != null) {
             hql.append(" and (upper(m.name) like :nameOrUsername or upper(m.username) like :nameOrUsername)");
             namedParameters.put("nameOrUsername", "%" + nameOrUsername.toUpperCase() + "%");
         }
-        DatabaseHelper.appendOrder(hql, "m.lineNumber");
+        HibernateHelper.appendOrder(hql, "m.lineNumber");
         return list(params, hql.toString(), namedParameters);
     }
 }

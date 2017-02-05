@@ -49,6 +49,11 @@ import org.apache.commons.lang.exception.NestableRuntimeException;
 public class ResettableHttpServletResponse implements HttpServletResponse, Resettable {
 
     @Override
+    public int getStatus() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
     public String getHeader(String string) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -65,11 +70,6 @@ public class ResettableHttpServletResponse implements HttpServletResponse, Reset
 
     @Override
     public void setContentLengthLong(long l) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int getStatus() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -265,15 +265,12 @@ public class ResettableHttpServletResponse implements HttpServletResponse, Reset
         return servletOutputStream;
     }
 
-    /**
-     *
-     * @return
-     */
     /*
     public Integer getStatus() {
         return status;
     }
     */
+    
     @Override
     public PrintWriter getWriter() throws IOException {
         if (outputStream != null) {

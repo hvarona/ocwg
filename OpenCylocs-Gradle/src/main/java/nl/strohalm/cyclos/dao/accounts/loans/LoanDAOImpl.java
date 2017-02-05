@@ -34,8 +34,8 @@ import nl.strohalm.cyclos.entities.groups.MemberGroup;
 import nl.strohalm.cyclos.entities.members.Element;
 import nl.strohalm.cyclos.entities.members.Member;
 import nl.strohalm.cyclos.utils.Period;
-import nl.strohalm.cyclos.utils.hibernate.HibernateCustomFieldHandler;
-import nl.strohalm.cyclos.utils.hibernate.HibernateHelper;
+import nl.strohalm.cyclos.utils.database.HibernateCustomFieldHandler;
+import nl.strohalm.cyclos.utils.database.HibernateHelper;
 
 /**
  * Implementation DAO for loans

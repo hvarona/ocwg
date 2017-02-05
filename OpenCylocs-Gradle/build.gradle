@@ -1,3 +1,4 @@
+apply plugin: 'com.github.ben-manes.versions'
 apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'com.bmuschko.tomcat'
@@ -74,16 +75,30 @@ dependencies {
     
     // Hibernate
     // http://mvnrepository.com/artifact/org.hibernate/hibernate-core
-    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.0.Final'
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.3.Final'
     // http://mvnrepository.com/artifact/org.hibernate.javax.persistence/hibernate-jpa-2.1-api
     compile group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api', version: '1.0.0.Final'
     // http://mvnrepository.com/artifact/org.hibernate/hibernate-c3p0
-    compile group: 'org.hibernate', name: 'hibernate-c3p0', version: '5.2.0.Final'
+    compile group: 'org.hibernate', name: 'hibernate-c3p0', version: '5.2.3.Final'
     
+    //// Jackson (An -all jar is in the lib directory, but Maven doesn't have one.)
+    //// http://mvnrepository.com/artifact/org.codehaus.jackson/jackson-core-asl
+    //compile group: 'org.codehaus.jackson', name: 'jackson-core-asl', version: '1.9.6'
+    //// http://mvnrepository.com/artifact/org.codehaus.jackson/jackson-mapper-asl
+    //compile group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.9.6'
+    
+    //compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.7.4'
+    //compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.4'
+    //compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.7.4'
+    
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.7.4'
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.4'
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.7.4'
-    
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.7.4' 
 
     // Apache
     // Commons
@@ -200,8 +215,60 @@ dependencies {
     // http://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
     compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
 
+    // MySQL Connector/J
+    // http://mvnrepository.com/artifact/mysql/mysql-connector-java
+    compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.2'
     
+    // http://mvnrepository.com/artifact/javax.mail/javax.mail-api
+    compile group: 'javax.mail', name: 'javax.mail-api', version: '1.5.5'
     
+    // JavaStat
+    compile name: 'javastat' // Sorry, I couldn't find JavaStat on Maven Central or jCenter. I grabbed the jar from Cyclos' lib directory.
+    
+    // Kaptcha
+    compile name: 'kaptcha', version: '2.3' // Sorry, I couldn't find Kaptcha on Maven Central or jCenter. I grabbed the jar from Cyclos' lib directory.
+    
+    // Java Extensions
+    // http://mvnrepository.com/artifact/javax.activation/activation
+    compile group: 'javax.activation', name: 'activation', version: '1.1.1'
+    // http://mvnrepository.com/artifact/javax.transaction/jta
+    compile group: 'javax.transaction', name: 'jta', version: '1.1'
+    // http://mvnrepository.com/artifact/javax.mail/javax.mail-api
+    compile group: 'javax.mail', name: 'javax.mail-api', version: '1.5.5'
+    // http://mvnrepository.com/artifact/javax.servlet.jsp/javax.servlet.jsp-api
+    providedCompile group: 'javax.servlet.jsp', name: 'javax.servlet.jsp-api', version: '2.3.1' // Not in the Cyclos lib directory, but required to be compiled.
+    
+    // Jstl
+    // https://mvnrepository.com/artifact/javax.servlet.jsp.jstl/javax.servlet.jsp.jstl-api
+    compile group: 'javax.servlet.jsp.jstl', name: 'javax.servlet.jsp.jstl-api', version: '1.2.1'
+    
+    // Hazelcast
+    // http://mvnrepository.com/artifact/com.hazelcast/hazelcast-all
+    compile group: 'com.hazelcast', name: 'hazelcast-all', version: '3.6.3'
+    
+    // JSci
+    // http://mvnrepository.com/artifact/net.sf.jsci/jsci
+    compile group: 'net.sf.jsci', name: 'jsci', version: '1.2'
+    
+    // JTidy
+    // http://mvnrepository.com/artifact/net.sf.jtidy/jtidy
+    compile group: 'net.sf.jtidy', name: 'jtidy', version: 'r938'
+    
+    // Ehcache
+    // http://mvnrepository.com/artifact/net.sf.ehcache/ehcache-core
+    compile group: 'net.sf.ehcache', name: 'ehcache-core', version: '2.6.11'
+    
+    // AspectJ compile (the jar file did not have a version, so I used the latest)
+    // http://mvnrepository.com/artifact/org.aspectj/aspectjrt
+    compile group: 'org.aspectj', name: 'aspectjrt', version: '1.8.9'
+    // http://mvnrepository.com/artifact/org.aspectj/aspectjweaver
+    compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.8.9'
+    
+    // SSLExt (the jar file did not have a version, and all the ones on Maven Central and jCenter are broken, so I just used the jar from Cyclos' lib directory.)
+    compile name: 'sslext'
+    
+    // Poor Man's Imaging Wrapper
+    compile name: 'pmiw' // Sorry, I couldn't find the Poor Man's Imaging Wrapper on Maven Central or jCenter. This is the only artifact I could find.
     
     // TODO: Add dependencies here ...
     // You can read more about how to add dependency here:

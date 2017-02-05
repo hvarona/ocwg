@@ -23,6 +23,7 @@ import java.util.Collection;
 
 import nl.strohalm.cyclos.entities.accounts.fees.account.AccountFee;
 import nl.strohalm.cyclos.entities.accounts.fees.transaction.TransactionFee;
+import nl.strohalm.cyclos.services.stats.StatisticalTaxesService;
 //import nl.strohalm.cyclos.services.stats.StatisticalTaxesService;
 
 /**
@@ -43,7 +44,7 @@ public class StatisticalTaxesQuery extends StatisticalQuery {
     private boolean                           relativeToGrossProductGraph;
     private boolean                           medianPerMemberGraph;
     private boolean                           maxMemberGraph;
-//    private StatisticalTaxesService.PaidOrNot paidOrNot;
+    private StatisticalTaxesService.PaidOrNot paidOrNot;
     private int                               notPaidLimit;
     private Collection<AccountFee>            accountFees;
     private Collection<TransactionFee>        transactionFees;
@@ -56,9 +57,9 @@ public class StatisticalTaxesQuery extends StatisticalQuery {
         return notPaidLimit;
     }
 
-  /*  public StatisticalTaxesService.PaidOrNot getPaidOrNot() {
+    public StatisticalTaxesService.PaidOrNot getPaidOrNot() {
         return paidOrNot;
-    }*/
+    }
 
     public Collection<TransactionFee> getTransactionFees() {
         return transactionFees;
@@ -136,9 +137,9 @@ public class StatisticalTaxesQuery extends StatisticalQuery {
         this.numberOfMembersGraph = numberOfMembersGraph;
     }
 
-  /*  public void setPaidOrNot(final StatisticalTaxesService.PaidOrNot paidOrNot) {
+    public void setPaidOrNot(final StatisticalTaxesService.PaidOrNot paidOrNot) {
         this.paidOrNot = paidOrNot;
-    }*/
+    }
 
     public void setRelativeToGrossProduct(final boolean relativeToGrossProduct) {
         this.relativeToGrossProduct = relativeToGrossProduct;

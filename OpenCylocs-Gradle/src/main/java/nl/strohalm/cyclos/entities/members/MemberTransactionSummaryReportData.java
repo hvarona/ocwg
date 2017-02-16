@@ -24,7 +24,6 @@ import java.util.Map;
 
 import nl.strohalm.cyclos.entities.accounts.transactions.PaymentFilter;
 import nl.strohalm.cyclos.services.transactions.TransactionSummaryVO;
-//import nl.strohalm.cyclos.services.transactions.TransactionSummaryVO;
 import nl.strohalm.cyclos.utils.DataObject;
 
 
@@ -48,7 +47,7 @@ public class MemberTransactionSummaryReportData extends DataObject {
             return;
         }
         if (credits == null) {
-            credits = new HashMap<PaymentFilter, TransactionSummaryVO>();
+            credits = new HashMap<>();
         }
         credits.put(paymentFilter, transactions);
     }
@@ -58,7 +57,7 @@ public class MemberTransactionSummaryReportData extends DataObject {
             return;
         }
         if (debits == null) {
-            debits = new HashMap<PaymentFilter, TransactionSummaryVO>();
+            debits = new HashMap<>();
         }
         debits.put(paymentFilter, transactions);
     }

@@ -26,7 +26,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import nl.strohalm.cyclos.entities.Relationship;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Is a customized document, that will have custom pages for (optionally)
@@ -46,6 +46,7 @@ public class DynamicDocument extends Document {
             this.name = name;
         }
 
+        @Override
         public String getName() {
             return name;
         }

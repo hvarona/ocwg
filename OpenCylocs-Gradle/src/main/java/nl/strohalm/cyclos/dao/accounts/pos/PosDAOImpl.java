@@ -34,9 +34,9 @@ import nl.strohalm.cyclos.entities.accounts.pos.PosQuery.QueryStatus;
 import nl.strohalm.cyclos.entities.exceptions.DaoException;
 import nl.strohalm.cyclos.entities.exceptions.EntityNotFoundException;
 import nl.strohalm.cyclos.entities.members.Member;
-import nl.strohalm.cyclos.utils.database.HibernateHelper;
+import nl.strohalm.cyclos.utils.database.DatabaseHelper;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 
@@ -48,8 +48,9 @@ public class PosDAOImpl extends BaseDAOImpl<Pos> implements PosDAO {
         super(Pos.class);
     }
 
+    @Override
     public List<Pos> getAllMemberPos(final Member member) {
-        final Map<String, Object> namedParameters = new HashMap<String, Object>();
+        final Map<String, Object> namedParameters = new HashMap<>();
         final StringBuilder hql = new StringBuilder("select p from " + getEntityType().getName() + " p");
         hql.append(" left join p.memberPos mp  ");
         hql.append(" where mp.member=:member");
@@ -57,12 +58,13 @@ public class PosDAOImpl extends BaseDAOImpl<Pos> implements PosDAO {
         return list(hql.toString(), namedParameters);
     }
 
+    @Override
     public Pos loadByPosId(final String posId, final Relationship... fetch) throws EntityNotFoundException {
         if (!StringUtils.isEmpty(posId)) {
-            final Map<String, Object> namedParameters = new HashMap<String, Object>();
+            final Map<String, Object> namedParameters = new HashMap<>();
             final StringBuilder hql = new StringBuilder("select p from " + getEntityType().getName() + " p");
             hql.append(" where 1 = 1");
-            HibernateHelper.addParameterToQuery(hql, namedParameters, "p.posId", posId);
+            DatabaseHelper.addParameterToQuery(hql, namedParameters, "p.posId", posId);
             final Pos pos = uniqueResult(hql.toString(), namedParameters);
             if (pos == null) {
                 throw new EntityNotFoundException(Pos.class);
@@ -73,9 +75,10 @@ public class PosDAOImpl extends BaseDAOImpl<Pos> implements PosDAO {
         }
     }
 
+    @Override
     public List<Pos> search(final PosQuery query) throws DaoException {
-        final Collection<Pos.Status> posStatuses = new ArrayList<Pos.Status>();
-        final Collection<MemberPos.Status> memberPosStatuses = new ArrayList<MemberPos.Status>();
+        final Collection<Pos.Status> posStatuses = new ArrayList<>();
+        final Collection<MemberPos.Status> memberPosStatuses = new ArrayList<>();
 
         final Collection<QueryStatus> statuses = query.getStatuses();
         if (statuses != null) {
@@ -88,23 +91,23 @@ public class PosDAOImpl extends BaseDAOImpl<Pos> implements PosDAO {
             }
         }
 
-        final Map<String, Object> namedParameters = new HashMap<String, Object>();
+        final Map<String, Object> namedParameters = new HashMap<>();
         final StringBuilder hql = new StringBuilder("select p from " + getEntityType().getName() + " p");
         hql.append(" left join p.memberPos mp");
         hql.append(" left join mp.member m");
         hql.append(" left join m.group g");
         hql.append(" where 1 = 1");
-        HibernateHelper.addParameterToQuery(hql, namedParameters, "p.posId", query.getPosId());
+        DatabaseHelper.addParameterToQuery(hql, namedParameters, "p.posId", query.getPosId());
         if (!posStatuses.isEmpty() && !memberPosStatuses.isEmpty()) {
             hql.append(" and (p.status in (:posStatuses) or (mp.status in (:memberPosStatuses)))");
             namedParameters.put("posStatuses", posStatuses);
             namedParameters.put("memberPosStatuses", memberPosStatuses);
         } else if (posStatuses.isEmpty() && !memberPosStatuses.isEmpty()) {
-            HibernateHelper.addInParameterToQuery(hql, namedParameters, "mp.status", memberPosStatuses);
+            DatabaseHelper.addInParameterToQuery(hql, namedParameters, "mp.status", memberPosStatuses);
         } else if (!posStatuses.isEmpty() && memberPosStatuses.isEmpty()) {
-            HibernateHelper.addInParameterToQuery(hql, namedParameters, "p.status", posStatuses);
+            DatabaseHelper.addInParameterToQuery(hql, namedParameters, "p.status", posStatuses);
         }
-        HibernateHelper.addParameterToQuery(hql, namedParameters, "mp.member", query.getMember());
+        DatabaseHelper.addParameterToQuery(hql, namedParameters, "mp.member", query.getMember());
         if (query.getBroker() != null) {
             hql.append(" and (m.broker = :broker or p.memberPos is null or p.status = :status) ");
             namedParameters.put("status", Pos.Status.UNASSIGNED);
@@ -117,7 +120,7 @@ public class PosDAOImpl extends BaseDAOImpl<Pos> implements PosDAO {
             namedParameters.put("managedBy", query.getManagedBy());
         }
 
-        HibernateHelper.appendOrder(hql, "p.posId", "m.name");
+        DatabaseHelper.appendOrder(hql, "p.posId", "m.name");
 
         return list(query, hql.toString(), namedParameters);
     }

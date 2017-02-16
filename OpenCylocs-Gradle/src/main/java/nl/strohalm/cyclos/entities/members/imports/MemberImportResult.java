@@ -19,7 +19,6 @@
  */
 package nl.strohalm.cyclos.entities.members.imports;
 
-//import nl.strohalm.cyclos.services.transactions.TransactionSummaryVO;
 import nl.strohalm.cyclos.services.transactions.TransactionSummaryVO;
 import nl.strohalm.cyclos.utils.DataObject;
 

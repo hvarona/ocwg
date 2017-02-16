@@ -24,7 +24,7 @@ import java.util.Collection;
 import nl.strohalm.cyclos.entities.Entity;
 import nl.strohalm.cyclos.utils.StringHelper;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Validates a required field

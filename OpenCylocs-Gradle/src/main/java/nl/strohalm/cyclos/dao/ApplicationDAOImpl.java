@@ -23,6 +23,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaQuery;
+
+
 import nl.strohalm.cyclos.utils.database.HibernateUtil;
 
 import nl.strohalm.cyclos.entities.Application;

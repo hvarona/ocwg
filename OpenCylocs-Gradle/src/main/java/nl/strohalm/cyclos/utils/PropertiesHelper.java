@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
 
 import org.apache.commons.beanutils.MethodUtils;
 import org.apache.commons.collections.IteratorUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Helper class for java.util.Properties
@@ -69,9 +69,11 @@ public class PropertiesHelper {
     /**
      * Loads a property file from a base name, like "package.File", which would be translated into a classpath resource "package/File.properties".
      * Returns null if no such file exists
+     * @param baseName
+     * @return 
      */
-    public static Properties loadFromResource(final String baseName) {
-        final String path = baseName.replace('.', '/');
+    public static Properties loadFromResource(final String baseName) {       
+        final String path = baseName.replace('.', '/');           
         final ClassLoader loader = Thread.currentThread().getContextClassLoader();
         final InputStream in = loader.getResourceAsStream(path + ".properties");
         if (in == null) {
@@ -84,6 +86,8 @@ public class PropertiesHelper {
      * Loads the properties from the input stream using the UTF-8 charset. Since the option to load properties using a specified charset is only
      * available in java 6+, running on older versions will result in ignoring the charset. For that reason, it is recommended that the resource
      * bundle itself be encoded using ascii in production
+     * @param in
+     * @return 
      */
     public static Properties loadFromStream(final InputStream in) {
         final Properties properties = new Properties();
@@ -109,13 +113,16 @@ public class PropertiesHelper {
 
     /**
      * Reads a resource bundle from a properties file encoded as utf-8
+     * @param baseName
+     * @param locale
+     * @return 
      */
     public static ResourceBundle readBundle(final String baseName, Locale locale) {
         if (locale == null) {
             locale = Locale.getDefault();
         }
 
-        final List<String> suffixes = new ArrayList<String>();
+        final List<String> suffixes = new ArrayList<>();
 
         if (locale != null) {
             suffixes.add("");

@@ -21,7 +21,7 @@ package nl.strohalm.cyclos.utils.conversion;
 
 import nl.strohalm.cyclos.utils.StringHelper;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * A converter that trims strings and remove all html/xml markup tags

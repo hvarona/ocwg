@@ -24,7 +24,6 @@ import java.util.Collection;
 import nl.strohalm.cyclos.entities.accounts.fees.account.AccountFee;
 import nl.strohalm.cyclos.entities.accounts.fees.transaction.TransactionFee;
 import nl.strohalm.cyclos.services.stats.StatisticalTaxesService;
-//import nl.strohalm.cyclos.services.stats.StatisticalTaxesService;
 
 /**
  * Parameters for Statistical queries.

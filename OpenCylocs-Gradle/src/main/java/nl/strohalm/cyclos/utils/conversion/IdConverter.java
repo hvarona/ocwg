@@ -19,7 +19,7 @@
  */
 package nl.strohalm.cyclos.utils.conversion;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Converter for entity ids, converting non-positive numbers to null

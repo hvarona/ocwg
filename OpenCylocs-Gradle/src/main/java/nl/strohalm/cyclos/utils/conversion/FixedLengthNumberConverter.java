@@ -23,7 +23,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Converts a string to number with fixed position decimals. Example: 1234.56 -&gt; 000123456 with precision = 9 and scale = 2

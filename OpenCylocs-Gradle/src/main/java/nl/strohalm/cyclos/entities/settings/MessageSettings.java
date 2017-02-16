@@ -21,7 +21,7 @@ package nl.strohalm.cyclos.entities.settings;
 
 import nl.strohalm.cyclos.utils.DataObject;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Groups messages settings

@@ -26,7 +26,7 @@ import java.util.List;
 
 import nl.strohalm.cyclos.utils.ClassHelper;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Indicates a validation error

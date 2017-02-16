@@ -29,7 +29,6 @@ import nl.strohalm.cyclos.entities.accounts.SystemAccountType;
 import nl.strohalm.cyclos.entities.groups.MemberGroup;
 import nl.strohalm.cyclos.entities.members.Reference;
 import nl.strohalm.cyclos.services.transactions.TransactionSummaryVO;
-//import nl.strohalm.cyclos.services.transactions.TransactionSummaryVO;
 import nl.strohalm.cyclos.utils.DataObject;
 
 public class CurrentStateReportVO extends DataObject {

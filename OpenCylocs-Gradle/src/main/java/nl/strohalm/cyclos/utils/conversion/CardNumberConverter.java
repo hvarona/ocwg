@@ -23,7 +23,7 @@ import java.math.BigInteger;
 
 import nl.strohalm.cyclos.utils.StringHelper;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * A converter for card numbers

@@ -26,7 +26,6 @@ import java.util.Map;
 
 import nl.strohalm.cyclos.entities.settings.LocalSettings;
 import nl.strohalm.cyclos.services.accounts.rates.RatesResultDTO;
-//import nl.strohalm.cyclos.services.accounts.rates.RatesResultDTO;
 import nl.strohalm.cyclos.utils.DataObject;
 import nl.strohalm.cyclos.utils.conversion.UnitsConverter;
 
@@ -87,9 +86,9 @@ public class AccountStatus extends DataObject implements Rated {
 
     @Override
     public Calendar getEmissionDate() {
-       if (rates != null) {
-           return rates.getEmissionDate();
-       }
+        if (rates != null) {
+            return rates.getEmissionDate();
+        }
         return null;
     }
 

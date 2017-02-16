@@ -31,7 +31,7 @@ import java.util.Map;
 import nl.strohalm.cyclos.utils.PropertyHelper;
 import nl.strohalm.cyclos.utils.RangeConstraint;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * This class has the information needed to validate an object. Common validation rules, like required and length constraints are handled out of the

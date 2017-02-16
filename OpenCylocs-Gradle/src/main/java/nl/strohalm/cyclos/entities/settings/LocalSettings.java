@@ -49,10 +49,9 @@ import nl.strohalm.cyclos.utils.conversion.CalendarConverter;
 import nl.strohalm.cyclos.utils.conversion.CoercionHelper;
 import nl.strohalm.cyclos.utils.conversion.NumberConverter;
 import nl.strohalm.cyclos.utils.conversion.UnitsConverter;
-import nl.strohalm.cyclos.utils.lucene.LuceneUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.br.BrazilianAnalyzer;
 import org.apache.lucene.analysis.de.GermanAnalyzer;
@@ -397,6 +396,9 @@ public class LocalSettings extends DataObject {
 
         /**
          * Generates the number for a given transaction id and date
+         * @param id
+         * @param date
+         * @return 
          */
         public String generate(final Long id, final Calendar date) {
             if (padLength <= 0) {
@@ -604,7 +606,7 @@ public class LocalSettings extends DataObject {
         if (dateConverterForGraphs == null) {
             // strip the year from the existing normal dateConverter
             final String[] formatParts = datePattern.order.getFormatParts();
-            final ArrayList<String> formatPartsForGraph = new ArrayList<String>(formatParts.length - 1);
+            final ArrayList<String> formatPartsForGraph = new ArrayList<>(formatParts.length - 1);
             for (final String formatPart : formatParts) {
                 if (formatPart.toLowerCase().indexOf('y') == -1) {
                     formatPartsForGraph.add(formatPart);
@@ -655,7 +657,7 @@ public class LocalSettings extends DataObject {
 
     public NumberConverter<BigDecimal> getHighPrecisionConverter() {
         if (highPrecisionConverter == null) {
-            highPrecisionConverter = new NumberConverter<BigDecimal>(BigDecimal.class, getHighPrecisionDecimalFormat());
+            highPrecisionConverter = new NumberConverter<>(BigDecimal.class, getHighPrecisionDecimalFormat());
         }
         return highPrecisionConverter;
     }
@@ -680,7 +682,7 @@ public class LocalSettings extends DataObject {
 
     public NumberConverter<Long> getLongConverter() {
         if (longConverter == null) {
-            longConverter = new NumberConverter<Long>(Long.class, getDecimalFormat(0));
+            longConverter = new NumberConverter<>(Long.class, getDecimalFormat(0));
         }
         return longConverter;
     }
@@ -774,7 +776,7 @@ public class LocalSettings extends DataObject {
 
     public NumberConverter<BigDecimal> getNumberConverter() {
         if (numberConverter == null) {
-            numberConverter = new NumberConverter<BigDecimal>(BigDecimal.class, getDecimalFormat());
+            numberConverter = new NumberConverter<>(BigDecimal.class, getDecimalFormat());
         }
         return numberConverter;
     }
@@ -782,7 +784,7 @@ public class LocalSettings extends DataObject {
     public NumberConverter<BigDecimal> getNumberConverterForPrecision(int precision) {
         precision = Math.max(0, Math.min(precision, MAX_PRECISION));
         if (specificPrecisionConverters[precision] == null) {
-            specificPrecisionConverters[precision] = new NumberConverter<BigDecimal>(BigDecimal.class, getDecimalFormat(precision));
+            specificPrecisionConverters[precision] = new NumberConverter<>(BigDecimal.class, getDecimalFormat(precision));
         }
         return specificPrecisionConverters[precision];
     }
@@ -888,6 +890,7 @@ public class LocalSettings extends DataObject {
 
     /**
      * Returns whether the SMS commands are enabled
+     * @return 
      */
     public boolean isSmsCommandEnabled() {
         return StringUtils.isNotEmpty(smsChannelName);

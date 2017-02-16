@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Represents a version on the upgrade descriptor.
@@ -70,11 +70,11 @@ public class Version implements Serializable {
         }
         database = database.toLowerCase();
         if (migrationsByDataBase == null) {
-            migrationsByDataBase = new HashMap<String, List<Class<Migration>>>();
+            migrationsByDataBase = new HashMap<>();
         }
         List<Class<Migration>> migrations = migrationsByDataBase.get(database);
         if (migrations == null) {
-            migrations = new ArrayList<Class<Migration>>();
+            migrations = new ArrayList<>();
             migrationsByDataBase.put(database, migrations);
         }
         migrations.add(clazz);
@@ -86,11 +86,11 @@ public class Version implements Serializable {
         }
         database = database.toLowerCase();
         if (statementsByDataBase == null) {
-            statementsByDataBase = new HashMap<String, List<String>>();
+            statementsByDataBase = new HashMap<>();
         }
         List<String> currentStatements = statementsByDataBase.get(database);
         if (currentStatements == null) {
-            currentStatements = new ArrayList<String>();
+            currentStatements = new ArrayList<>();
             statementsByDataBase.put(database, currentStatements);
         }
         currentStatements.addAll(statements);

@@ -44,9 +44,9 @@ import nl.strohalm.cyclos.entities.groups.OperatorGroup;
 import nl.strohalm.cyclos.exceptions.PermissionDeniedException;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.ObjectUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.WordUtils;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.text.WordUtils;
 
 /**
  * Contains utility methods to manipulate and check permissions

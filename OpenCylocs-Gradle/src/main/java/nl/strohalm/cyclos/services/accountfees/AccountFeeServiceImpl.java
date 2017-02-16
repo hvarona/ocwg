@@ -327,7 +327,7 @@ public class AccountFeeServiceImpl implements AccountFeeServiceLocal, Initializi
         AccountFeeLogDetailsDTO dto = new AccountFeeLogDetailsDTO();
         dto.setAccountFeeLog(log);
         dto.setSkippedMembers(memberAccountFeeLogDao.countSkippedMembers(log));
-        dto.setTransfers(fee.getInvoiceMode() == InvoiceMode.ALWAYS ? new TransactionSummaryVO() : memberAccountFeeLogDao.getTransfersSummary(log));
+        dto.setTransfers(fee.getInvoiceMode()== InvoiceMode.ALWAYS ? new TransactionSummaryVO() : memberAccountFeeLogDao.getTransfersSummary(log));
         dto.setInvoices(fee.getInvoiceMode() == InvoiceMode.NEVER ? new TransactionSummaryVO() : memberAccountFeeLogDao.getInvoicesSummary(log));
         dto.setAcceptedInvoices(fee.getInvoiceMode() == InvoiceMode.NEVER ? new TransactionSummaryVO() : memberAccountFeeLogDao.getAcceptedInvoicesSummary(log));
         dto.setOpenInvoices(dto.getInvoices().subtract(dto.getAcceptedInvoices()));

@@ -28,7 +28,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -45,7 +45,7 @@ public class VersionHistoryReader {
 
     /**
      * Read the version history from classpath
-     * @throws ParserConfigurationException
+     * @return 
      */
     public VersionHistory read() {
         final Document document = readDocument();
@@ -100,7 +100,7 @@ public class VersionHistoryReader {
             return Collections.emptyList();
         }
         final NodeList items = element.getElementsByTagName("item");
-        final List<String> list = new ArrayList<String>();
+        final List<String> list = new ArrayList<>();
         for (int i = 0; i < items.getLength(); i++) {
             final Element item = (Element) items.item(i);
             final String value = readValue(item);

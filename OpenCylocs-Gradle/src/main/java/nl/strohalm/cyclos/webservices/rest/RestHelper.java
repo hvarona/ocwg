@@ -33,7 +33,7 @@ import nl.strohalm.cyclos.utils.StringHelper;
 import nl.strohalm.cyclos.utils.validation.ValidationException;
 import nl.strohalm.cyclos.webservices.model.ServerErrorVO;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Contains helper methods for REST services

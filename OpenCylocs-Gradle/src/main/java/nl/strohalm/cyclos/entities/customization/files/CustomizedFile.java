@@ -36,7 +36,7 @@ import nl.strohalm.cyclos.utils.StringHelper;
 import nl.strohalm.cyclos.utils.StringValuedEnum;
 
 //import org.apache.commons.io.filefilter.SuffixFileFilter;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * This entity is the customization of a display file
@@ -56,6 +56,7 @@ public class CustomizedFile extends File {
             this.name = name;
         }
 
+        @Override
         public String getName() {
             return name;
         }
@@ -82,6 +83,7 @@ public class CustomizedFile extends File {
             return filter;
         }
 
+        @Override
         public String getValue() {
             return value;
         }

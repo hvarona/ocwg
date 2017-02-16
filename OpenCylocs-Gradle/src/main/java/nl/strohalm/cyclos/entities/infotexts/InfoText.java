@@ -35,7 +35,7 @@ import javax.persistence.Transient;
 import nl.strohalm.cyclos.entities.Entity;
 import nl.strohalm.cyclos.utils.Period;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 @javax.persistence.Entity
 @Table(name = "info_texts")
@@ -51,7 +51,7 @@ public class InfoText extends Entity {
 
     public void addAlias(final String alias) {
         if (aliases == null) {
-            aliases = new LinkedHashSet<String>();
+            aliases = new LinkedHashSet<>();
         }
         aliases.add(alias);
     }

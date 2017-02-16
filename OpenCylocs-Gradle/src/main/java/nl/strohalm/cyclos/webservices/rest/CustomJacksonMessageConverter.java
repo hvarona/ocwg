@@ -32,6 +32,7 @@ import java.io.IOException;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
 
+
 /**
  * Custom Jackson converter used to customize the {@link ObjectMapper}
  * @author luis

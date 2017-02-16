@@ -18,7 +18,6 @@
 
  */
 package nl.strohalm.cyclos.utils;
-
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;

@@ -36,7 +36,7 @@ import nl.strohalm.cyclos.utils.validation.ValidationError;
 import nl.strohalm.cyclos.utils.validation.ValidationException;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Helper class for resource bundle access

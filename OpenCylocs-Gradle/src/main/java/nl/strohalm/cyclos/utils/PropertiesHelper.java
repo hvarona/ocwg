@@ -19,6 +19,7 @@
  */
 package nl.strohalm.cyclos.utils;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -29,6 +30,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.beanutils.MethodUtils;
 import org.apache.commons.collections.IteratorUtils;
@@ -72,14 +75,25 @@ public class PropertiesHelper {
      * @param baseName
      * @return 
      */
-    public static Properties loadFromResource(final String baseName) {       
-        final String path = baseName.replace('.', '/');           
+    public static Properties loadFromResource(final String baseName) {               
+        /*final String path = baseName.replace('.', '/');
         final ClassLoader loader = Thread.currentThread().getContextClassLoader();
         final InputStream in = loader.getResourceAsStream(path + ".properties");
         if (in == null) {
-            return null;
-        }
-        return loadFromStream(in);
+        return null;
+        }*/
+        InputStream in = PropertiesHelper.class.getResourceAsStream("/" + baseName + ".properties");
+        Properties properties = new Properties();
+        System.out.println("/" + baseName + ".properties");
+        if (in != null){
+            try {
+                properties.load(in);               
+                return properties;
+            } catch (IOException ex) {
+                Logger.getLogger(PropertiesHelper.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }   
+        return null;
     }
 
     /**

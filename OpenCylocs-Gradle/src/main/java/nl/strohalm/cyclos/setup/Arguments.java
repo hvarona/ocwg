@@ -105,9 +105,12 @@ public class Arguments {
             exportTo = "cyclos.ddl";
         }
         setup.setExportScriptTo(exportTo == null ? null : new File(exportTo));
-        setup.setCreateInitialData(commandLine.hasOption('i'));
-        setup.setCreateBasicData(commandLine.hasOption('b'));
-        setup.setCreateSmsData(commandLine.hasOption('m'));
+        //setup.setCreateInitialData(commandLine.hasOption('i'));
+        setup.setCreateInitialData(true);
+        //setup.setCreateBasicData(commandLine.hasOption('b'));
+        setup.setCreateBasicData(true);
+        //setup.setCreateSmsData(commandLine.hasOption('m'));
+        setup.setCreateSmsData(true);
 
         // Check if help should be printed
         if (!setup.isValid() || commandLine.hasOption('?')) {

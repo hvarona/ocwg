@@ -274,7 +274,7 @@ public class Channel extends Entity implements Comparable<Channel> {
         return groups;
     }
 
-    @Column(length = 50, nullable = false)
+    @Column(name = "internalName", length = 50, nullable = false)
     public String getInternalName() {
         return internalName;
     }

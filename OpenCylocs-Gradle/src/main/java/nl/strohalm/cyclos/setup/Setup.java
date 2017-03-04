@@ -47,7 +47,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class Setup {
 
-    public static final String[] SPRING_CONFIG_FILES = {"/nl/strohalm/cyclos/spring/persistence.xml"};
+    public static final String[] SPRING_CONFIG_FILES = {"/persistence.xml"};
     public static PrintStream out = System.out;
     private static final String RESOURCE_BUNDLE_BASE_NAME = "CyclosSetup";
 

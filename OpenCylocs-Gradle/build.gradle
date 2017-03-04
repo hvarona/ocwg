@@ -21,11 +21,18 @@ buildscript {
 group 'nl.strohalm'
 version '3.7.3'
 
-//sourceCompatibility = 1.7 // Cyclos refuses to compile in Java 8
+sourceCompatibility = 1.7 // Cyclos refuses to compile in Java 8
 
-if (!hasProperty('mainClass')) {
-    ext.mainClass = 'nl.strohalm.cyclos.setup.Setup'
-}
+//if (!hasProperty('mainClass')) {
+  //  ext.mainClass = 'nl.strohalm.cyclos.setup.Setup'
+//}
+
+// War file name
+war.baseName = 'openCyclos'
+
+// Web directory, this overrides the default value "webapp"
+rootProject.webAppDirName = 'webapp'
+
 
 sourceSets {
     main {
@@ -33,7 +40,7 @@ sourceSets {
             srcDirs= ["src/main/java"]
         }
         resources {
-            srcDirs= ["src/main/resources"]
+            srcDirs= ["src/main/resources", "src/main/java"]            
         }
     }
 }
@@ -176,11 +183,11 @@ dependencies {
     
     // ASM (2.2.2 of util was not available, so I used 2.2.3)
     // http://mvnrepository.com/artifact/asm/asm
-    compile group: 'asm', name: 'asm', version: '3.3.1'
+    //compile group: 'asm', name: 'asm', version: '3.3.1'
     // http://mvnrepository.com/artifact/asm/asm-commons
-    compile group: 'asm', name: 'asm-commons', version: '4.1'
+    //compile group: 'asm', name: 'asm-commons', version: '4.1'
     // http://mvnrepository.com/artifact/asm/asm-util
-    compile group: 'asm', name: 'asm-util', version: '3.3.1'
+    //compile group: 'asm', name: 'asm-util', version: '3.3.1'
     
     // AspectJ compile (the jar file did not have a version, so I used the latest)
     // http://mvnrepository.com/artifact/org.aspectj/aspectjrt
@@ -319,7 +326,7 @@ dependencies {
     // http://mvnrepository.com/artifact/org.springframework/spring-aop
     compile group: 'org.springframework', name: 'spring-aop', version: '4.3.2.RELEASE'
     // http://mvnrepository.com/artifact/org.springframework/spring-asm
-    compile group: 'org.springframework', name: 'spring-asm', version: '3.1.4.RELEASE'
+    //compile group: 'org.springframework', name: 'spring-asm', version: '3.1.4.RELEASE'
     // http://mvnrepository.com/artifact/org.springframework/spring-beans
     compile group: 'org.springframework', name: 'spring-beans', version: '4.3.2.RELEASE'
     // http://mvnrepository.com/artifact/org.springframework/spring-context-support

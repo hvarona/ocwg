@@ -18,15 +18,13 @@
 	<!-- Spring xml configuration files -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>
-			classpath:/nl/strohalm/cyclos/spring/persistence.xml
-			classpath:/nl/strohalm/cyclos/spring/utility.xml
-        	classpath:/nl/strohalm/cyclos/spring/dao.xml
-        	classpath:/nl/strohalm/cyclos/spring/service.xml
-        	classpath:/nl/strohalm/cyclos/spring/security.xml
-        	classpath:/nl/strohalm/cyclos/spring/misc.xml
-			classpath:/nl/strohalm/cyclos/spring/web_beans.xml
-			classpath:/nl/strohalm/cyclos/spring/rest_security.xml
+		<param-value>                    
+                    classpath:/nl/strohalm/cyclos/spring/utility.xml                   
+                    classpath:/nl/strohalm/cyclos/spring/service.xml
+                    classpath:/nl/strohalm/cyclos/spring/security.xml
+                    classpath:/nl/strohalm/cyclos/spring/misc.xml
+                    classpath:/nl/strohalm/cyclos/spring/web_beans.xml
+                    classpath:/nl/strohalm/cyclos/spring/rest_security.xml
 		</param-value>		
 	</context-param>
 	<context-param>

@@ -294,9 +294,11 @@ public abstract class Group extends Entity implements Comparable<Group> {
     @Column(name = "permission")
     public Collection<String> getPermissionsString() {
         Collection<String> permString = new ArrayList<>();
-        for (Permission perm : permissions) {
-            permString.add(perm.getQualifiedName());
-        }
+        if (permissions != null){
+            for (Permission perm : permissions) {
+                permString.add(perm.getQualifiedName());
+            }
+        }        
         return permString;
     }
 
